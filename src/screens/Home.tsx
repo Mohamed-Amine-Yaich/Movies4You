@@ -9,11 +9,12 @@ import { SCREENS } from '../data/screens';
 import { SEARCH_PLACEHOLDER, NO_RESULTS_TEXT, NO_MORE_RESULTS_TEXT, ERROR_TOAST_MESSAGE } from '../constants';
 import { IMovie } from '../interfaces/interfaces';
 import useMovieSearch from '../hooks/useMovieSearch';
+import { INavigation } from '../navigation/Inavigation';
 
 const { width, height } = Dimensions.get("window");
 
 const Home = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<INavigation>();
     const {
         loading,
         results,
@@ -39,7 +40,7 @@ const Home = () => {
 
     const renderItem = ({ item, index }: { item: IMovie, index: number }) => (
         <TouchableWithoutFeedback
-            onPress={() => navigation.navigate(SCREENS.MOVIE_DETAILS, { movie: item })}
+            onPress={() => navigation.navigate(SCREENS.MOVIE_DETAILS, { movieId: item.imdbID })}
         >
             <View style={styles.movieItem}>
                 <Image

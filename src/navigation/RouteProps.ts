@@ -2,7 +2,7 @@ import { RouteProp } from '@react-navigation/native';
 
 export type AppParamList = {
     HOME: {}
-    MOVIE_DETAILS: { title: string; description: string; poster: string; rating: number; };
+    MOVIE_DETAILS: { movieId: string };
 
 };
 export type HomeScreenRouteProps = RouteProp<AppParamList, 'HOME'>;

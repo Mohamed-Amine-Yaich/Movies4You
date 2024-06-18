@@ -16,7 +16,7 @@ export interface IFetchMovieBySearchResponse {
   totalResults: string
  
 }
-export interface IFetchMovieByIDResponse extends MovieDetails { }
+export interface IFetchMovieByIDResponse extends MovieDetails {}
 
 export interface IMovie { Poster: string, Title: string, Type: string, Year: string, imdbID: string }
 
