@@ -12,29 +12,30 @@ interface IMovieCard {
 
 const MovieCard = ({ item }: IMovieCard) => {
     const navigation = useNavigation<INavigation>()
+    console.log('poster', item?.Poster)
     return (
-       
-            <TouchableWithoutFeedback
-                onPress={() => navigation.navigate(SCREENS.MOVIE_DETAILS, { movieId: item.imdbID })}
-            >
-                <View style={styles.movieItem}>
-                    <Image
-                        source={item.Poster ? { uri: item.Poster } : require('../../assets/images/randomMoviePoster.png')}
-                        style={styles.posterImage}
-                    />
-                    <Text style={[styles.posterText, item?.Title?.length > 17 ? { maxWidth: width * 0.37 } : {}]}>
-                        {item.Title}
-                    </Text>
-                </View>
-            </TouchableWithoutFeedback>
-        
-  );
+
+        <TouchableWithoutFeedback
+            onPress={() => navigation.navigate(SCREENS.MOVIE_DETAILS, { movieId: item.imdbID })}
+        >
+            <View style={styles.movieItem}>
+                <Image
+                    source={item?.Poster && item.Poster != 'N/A' ? { uri: item?.Poster } : require('../../assets/images/randomMoviePoster.png')}
+                    style={styles.posterImage}
+                />
+                <Text style={[styles.posterText, item?.Title?.length > 17 ? { maxWidth: width * 0.37 } : {}]}>
+                    {item.Title}
+                </Text>
+            </View>
+        </TouchableWithoutFeedback>
+
+    );
 };
 
 export default MovieCard;
 
 const styles = StyleSheet.create({
-   
+
     movieItem: {
         padding: 10,
     },
