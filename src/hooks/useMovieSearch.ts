@@ -56,6 +56,10 @@ const useMovieSearch = () => {
         }
     };
 
+
+    //note : 
+    //I couldn't find an endpoint that give a random/popular set of movies as it should exist
+    //for that i have made a list of movies IDs and iterate and fetch them to fill home screen initiallay
     const fetchRandomMoviesWhenScreenLoad = useCallback(async (page: number) => {
         try {
             const startIndex = (page - 1) * PAGE_SIZE;
@@ -64,8 +68,8 @@ const useMovieSearch = () => {
 
             const allMoviesPromise = movieIdsToFetch.map((id) =>
                 fetchMovies({ i: id, t: '' })
-            );
-
+            ); 
+            
             const allMovies = await Promise.all(allMoviesPromise) as MovieDetails[];
             const newMovies: IMovie[] = allMovies.map(
                 ({ Title, Poster, Type, Year, imdbID }) => ({
