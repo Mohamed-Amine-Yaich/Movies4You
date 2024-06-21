@@ -6,7 +6,7 @@ import { MovieDetails } from '../../interfaces/interfaces';
 
 interface MovieDetailPosterProps {
     loading: boolean
-    movie: MovieDetails
+    movie?: MovieDetails
 }
 
 const MovieDetailPoster = ({ loading, movie }: MovieDetailPosterProps) => {
@@ -35,7 +35,7 @@ export default MovieDetailPoster;
 
 
 const styles = StyleSheet.create({
-    
+
     movieImageContainer: {
         width: '100%',
         position: 'relative',

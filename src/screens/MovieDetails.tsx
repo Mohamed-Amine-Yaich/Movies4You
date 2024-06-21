@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView, } from 'react-native';
-import { ChevronLeftIcon } from "react-native-heroicons/outline";
+import { StyleSheet, ScrollView, } from 'react-native';
 import ErrorToast from '../components/ErrorToast';
 import MovieDetailContent from '../components/MovieDetailContent';
 import MovieDetailPoster from '../components/MovieDetailsPoster';
@@ -13,16 +12,16 @@ const MovieDetails = () => {
 
     return (
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <MovieDetailBackButton handleNavigation={handleNavigation} />
 
-            {movie && <MovieDetailPoster loading={loading} movie={movie} />}
+            {movie && <MovieDetailBackButton handleNavigation={handleNavigation} />}
+            <MovieDetailPoster loading={loading} movie={movie} />
 
             {movie && <MovieDetailContent movie={movie} />}
 
             {(error || apiError) && (
                 <ErrorToast
                     isVisible={!!(error || apiError)}
-                    message={error ? "An error has occurred. Please try later." : apiError}
+                    message={error ? "An error has occurred. Please try later." : apiError&&'Movie could not be loaded. Please try again later.'}
                     onClose={hideErrorToast}
                 />
             )}
@@ -37,5 +36,5 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#f8f8f8',
     },
- 
+
 });
