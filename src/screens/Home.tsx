@@ -25,12 +25,7 @@ const Home = () => {
             <SearchBar handleTextDebounce={handleTextDebounce} />
 
             <HomeContent loading={loading} results={results} searchText={searchText} currentPage={currentPage} apiError={apiError} error={error} loadMoreMovies={loadMoreMovies} />
-
-            <ErrorToast
-                isVisible={!!error || !!apiError}
-                message={error ? ERROR_TOAST_MESSAGE : apiError}
-                onClose={hideErrorToast}
-            />
+            
         </View>
     );
 };

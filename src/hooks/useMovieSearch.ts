@@ -57,31 +57,33 @@ const useMovieSearch = () => {
     };
 
 
-    //note : 
-    //I couldn't find an endpoint that give a random/popular set of movies as it should exist
-    //for that i have made a list of movies IDs and iterate and fetch them to fill home screen initiallay
+    // Note:
+    // Initially, I couldn't find an endpoint that provides a random or popular set of movies as expected.
+    // To work around this, I created a list of movie IDs and fetched each movie individually to populate the home screen.
+    // 
+    // Update:
+    // I changed this approach because it made the process more complicated. Handling each movie individually required additional logic to manage errors and ensure the display of correct movies while removing any that caused errors.
+    // 
+    // Instead, I now use the search API, which provides a clear response and a list of movies. This allows me to display a random set of movies initially. The displayed movies are then updated based on user searches.
+
+
     const fetchRandomMoviesWhenScreenLoad = useCallback(async (page: number) => {
         try {
-            const startIndex = (page - 1) * PAGE_SIZE;
-            const endIndex = page * PAGE_SIZE;
-            const movieIdsToFetch = predefinedMovies.slice(startIndex, endIndex);
 
-            const allMoviesPromise = movieIdsToFetch.map((id) =>
-                fetchMovies({ i: id, t: '' })
-            ); 
-            
-            const allMovies = await Promise.all(allMoviesPromise) as MovieDetails[];
-            const newMovies: IMovie[] = allMovies.map(
-                ({ Title, Poster, Type, Year, imdbID }) => ({
-                    Poster,
-                    Title,
-                    Type,
-                    Year,
-                    imdbID,
-                })
-            );
+            const res = await fetchMovies({ s: 'movie', page: page ?? 1 }) as IFetchMovieBySearchResponse | IAPIErrorResponse;
+            if ('Response' in res) {
+                if (res.Response === 'True') {
+                    const moviesBySearchRes = res as IFetchMovieBySearchResponse;
+                    setResults(currMovies => [...currMovies, ...moviesBySearchRes.Search]);
+                } else if (res.Response === 'False') {
+                    const errorResponse = res as IAPIErrorResponse;
+                    setApiError(errorResponse.Error);
+                }
+            } else {
+                console.error('Error while fetching movies:', res);
+                setResults([]);
+            }
 
-            setResults((currMovies) => [...currMovies, ...newMovies]);
         } catch (error) {
             setError('Failed to fetch movies. Please try again later.');
         } finally {
