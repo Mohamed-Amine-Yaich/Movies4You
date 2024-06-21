@@ -1,6 +1,7 @@
 import axiosInstance from './axiosInstance';
-import { IFetchMovieByIDResponse,IFetchMovieBySearchResponse , IQuery } from '../interfaces/interfaces';
+import { IQuery } from '../interfaces/interfaces';
 import { AxiosError } from 'axios';
+import Config from 'react-native-config';
 
 
 
@@ -8,7 +9,7 @@ export const fetchMovies = async (query: IQuery) => {
   try {
     const response = await axiosInstance.get('/', {
       params: {
-        apikey: '6d8384ab', // Replace with your actual API key from .env
+        apikey: Config.API_KEY, // Replace with your actual API key from .env
         v: 1,
         ...query
       },
