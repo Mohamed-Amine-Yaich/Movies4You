@@ -12,7 +12,6 @@ interface IMovieCard {
 
 const MovieCard = ({ item }: IMovieCard) => {
     const navigation = useNavigation<INavigation>()
-    console.log('poster', item?.Poster)
     return (
 
         <TouchableWithoutFeedback
